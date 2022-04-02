@@ -1,0 +1,9 @@
+Open Start, write "PowerShell" and open it with admin.
+Write "Set-ExecutionPolicy Unrestricted".
+Write "A" and "Enter" if necessary.
+
+Now you can run the scripts!
+
+To run the server and client, you need to have installed Node.JS.
+You can check if you have it installed by writing "npm --version" into PowerShell.
+Download Node.js LTM (Currently 16.14.2) on https://nodejs.org/en/
