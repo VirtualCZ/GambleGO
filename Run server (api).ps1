@@ -1,2 +1,2 @@
 cd server
-npm run devStart
+npm run dev

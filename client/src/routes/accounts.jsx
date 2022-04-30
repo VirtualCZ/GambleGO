@@ -1,15 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import Axios from 'axios'
+import { AppContext } from "/src/App";
 
 export default function Accounts() {
     const [accountsList, setAccountsList] = useState([])
     const [AccountName, setAccountName] = useState("")
     const [Tokens, setTokens] = useState(0)
-    const [currentUser, setCurrentUser] = useState("Test")
+    const { setUser } = useContext(AppContext);
+    const { setToken } = useContext(AppContext);
+    const { setUserID } = useContext(AppContext);
+    const inputRefA = useRef(null)
+    const inputRefT = useRef(null)
 
-    const selectAccount = (e) => {
-        setCurrentUser(e.target.value)
-        console.log(currentUser);
+    const selectAccount = (selectuserid, selectuser, selecttoken) => {
+        setUser(selectuser),
+        setToken(selecttoken)
+        setUserID(selectuserid)
+        localStorage.setItem('selectuserid', selectuserid)
     }
 
     useEffect(() => {
@@ -19,73 +26,80 @@ export default function Accounts() {
     }, [])
 
     const submitAccount = () => {
-        Axios.post("http://localhost:3030/api/insertAccount", {
-            OwnerNickname: AccountName,
-            Token: Tokens
-            
-        })
-        setAccountsList([
-          ...accountsList,
-          {AccountName: AccountName}
-        ])
-      }
-      
-    const deleteAccount = (account, tokens) => {
-        Axios.delete(`http://localhost:3030/api/delete/${account}//${tokens}`)
-      }
+      Axios.post("http://localhost:3030/api/insertAccount", {
+          OwnerNickname: AccountName,
+          Token: Tokens
+          
+      },
+      inputRefA.current.value= "",
+      inputRefT.current.value= ""
+      )
+      setAccountsList([
+        ...accountsList,{
+          AccountName: AccountName, 
+          Tokens: Tokens
+        }
+        
+      ])
+    }
 
+    const deleteAccount = (IDOwner) => {
+      Axios.delete(`http://localhost:3030/api/delete/${IDOwner}`)
+  }
 
     return (
       <main className="text-3xl font-bold text-slate-200">
-        <h2>Accounts 👥 {currentUser}</h2>
-        <div class="flex justify-center">
+        <h2>Accounts 👥</h2>
+        <div className="flex justify-center">
             <div>
-            <h1 class="flex justify-center">Add account</h1>
+            <h1 className="flex justify-center">Add account</h1>
             <label>Username:</label><br/>
             <input 
                 name="AccountName" 
                 type="text" 
-                class="rounded-cool mb-4 mt-2 mx-2 px-2 text-black" 
+                className="rounded-cool mb-4 mt-2 mx-2 px-2 text-black" 
                 placeholder="username"
+                ref={inputRefA}
                 onChange={(e) => {
                     setAccountName(e.target.value)
-                  }}
+                }}
             />
             <br/>
             <label>Tokens:</label><br/>
             <input 
                 name="Tokens" 
                 type="number" 
-                class="rounded-cool mb-4 mt-2 mx-2 px-2 text-black" 
+                className="rounded-cool mb-4 mt-2 mx-2 px-2 text-black" 
                 placeholder="tokens count"
+                ref={inputRefT}
                 onChange={(e) => {
                     setTokens(e.target.value)
                   }}
             />
             <br/>
-            <div class=" mb-5 flex justify-center">
+            <div className=" mb-5 flex justify-center">
             <button 
-                class="hover:text-orange-300 "
+                className="hover:text-orange-300 "
                 onClick={submitAccount}
-            >
+                >
                 Add an account
             </button>
             </div>
         </div>
         </div>
-        <div class="grid-cols-3 grid">
+        <div className="grid-cols-3 grid">
         {accountsList.map((val)=>{
           return(
             
-            <div class=" p-1.5 px-2 m-2 rounded-cool bg-slate-700 hover:bg-gray-700 hover:m-0.5 hover:border-2 hover:border-white-200 box-content
+            <div key={val.IDOwner} className=" p-1.5 px-2 m-2 rounded-cool bg-slate-700 hover:bg-gray-700 hover:m-0.5 hover:border-2 hover:border-white-200 box-content
             transition-all ">
-                <div class="flex flex-row">
-                    <h1 class="basis-1/2">Name: {val.AccountName}</h1>
-                    <h1 class="basis-1/2 flex justify-end">Tokens: {val.Tokens}</h1>
+                <div className="flex flex-row">
+                    <h1 className="basis-1/2">Name: {val.OwnerNickname}</h1>
+                    <h1 className="basis-1/2 flex justify-end">Tokens: {val.Token}</h1>
                 </div>
-                <div class="flex flex-col-2">
-                    <button value={val.AccountName} class="hover:text-orange-300 basis-1/2" onClick={selectAccount}> Select 👤</button>
-                    <button class="hover:text-orange-300 basis-1/2" onClick={() => {deleteAccount(val.OwnerNickname, val.Tokens)}}> Delete ❌</button>
+                <div className="flex flex-col-2">
+                    <button className="hover:text-orange-300 basis-1/2" onClick={() => {selectAccount(val.IDOwner, val.OwnerNickname, val.Token)}}> Select 👤</button>
+                    <button className="hover:text-orange-300 basis-1/2" onClick={() => {deleteAccount(val.IDOwner)}}> Delete ❌</button>
                 </div>
             </div>
             
