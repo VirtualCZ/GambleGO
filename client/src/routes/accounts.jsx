@@ -44,7 +44,7 @@ export default function Accounts() {
     }
 
     const deleteAccount = (IDOwner) => {
-      Axios.delete(`http://localhost:3030/api/delete/${IDOwner}`)
+      Axios.delete(`http://localhost:3030/api/deleteAccount/${IDOwner}`)
   }
 
     return (

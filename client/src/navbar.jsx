@@ -59,7 +59,7 @@
             <div className="basis-1/3 flex flex-row justify-end">
               <div className="bg-slate-700 hover:bg-gray-700 transition-all divide-x py-1.5 px-2 mr-2 ml-1 box-content rounded-cool flex flex-row">
                 <button className="pr-1.5 hover:text-orange-500
-                transition-all" onClick={()=>{sendTokens(token+1000),setToken(token+1000)}}>Add Tokens</button>              
+                transition-all" onClick={()=>{sendTokens(1000),setToken(token+1000)}}>Add Tokens</button>              
                 <p
                 className="px-1.5 hover:text-orange-500 
                 transition-all"

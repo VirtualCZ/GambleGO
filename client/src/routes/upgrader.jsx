@@ -61,6 +61,7 @@ export default function Upgrader() {
     const random = Math.random()* 100
     console.log(ItemPerc)
     console.log(random + " " + "random")
+    deleteItem()
     if(random < ItemPerc)
     {
       console.log("JA"),
@@ -78,9 +79,7 @@ export default function Upgrader() {
           Amount: ItemSelect.Amount
         }
       ])
-      deleteItem()
     }
-    if(random > ItemPerc){deleteItem()}
   }
 
     return (
@@ -173,10 +172,10 @@ export default function Upgrader() {
               </div>
               <h1 className="flex justify-center text-sm italic">Valid % are from 30 to 75</h1>
               <button
-                  className=' border-2 border-green-700 bg-green-400 hover:bg-green-600 text-green-900 hover:text-rose-50 w-[100%] h-10 rounded-cool my-2 transition-all'
+                  className='cursor-pointer text-xl text-slate-900 w-[100%] h-10 hover:text-orange-300 hover:bg-slate-600 hover:border-2 hover:border-white-200 bg-orange-300 rounded-cool px-2 py-0.25 transition-all'
                   onClick={()=>submitItem()}
                 >
-                  Let's go xd
+                  Upgrade!
               </button>
               <h1 className="flex justify-center text-center italic text-sm">The "Chance %" refers to the chance of losing your item and your possible gain.</h1>
 

@@ -57,7 +57,7 @@ export default function CaseDetail(){
       const Price = parseInt(CasePrice)
       if (token >= Price){
         setToken(token-Price)
-        sendTokens(token-Price)
+        sendTokens(-Price)
         const randomNumero = Math.random()* 100;
         if(randomNumero <= 70)
         {

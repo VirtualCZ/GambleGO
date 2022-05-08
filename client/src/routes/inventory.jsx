@@ -14,8 +14,7 @@ export default function Inventory() {
   }, [])  
 
   const sellItem = (itemID, itemValue, amount) => {
-        Axios.delete(`http://localhost:3030/api/deleteOneItem/${userID}/${itemID}`),
-        sendTokens(token+itemValue)
+        sendTokens(itemValue)
         setToken(token+itemValue),
         deleteItem(itemID, amount)
   }
